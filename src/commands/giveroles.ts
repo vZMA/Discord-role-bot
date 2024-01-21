@@ -112,9 +112,9 @@ export class VerifyCommand extends Command {
         await member.setNickname(`${user.fname} ${user.lname} | ${user.artcc}`);
         let rating = config[user.rating];
         roles.push(await interaction.guild?.roles.fetch(rating));
-        if (user.artcc != "ZJX") {
+        if (user.artcc != "ZMA") {
           for (let i = 0; i < user.visiting_facilities.length; i++) {
-            if (user.visiting_facilities[i].facility == "ZJX") {
+            if (user.visiting_facilities[i].facility == "ZMA") {
               console.log("User is a visitor");
               console.log(config.visitor);
               console.log(await interaction.guild?.roles.fetch(config.visitor));
@@ -161,7 +161,7 @@ export class VerifyCommand extends Command {
         if (user.roles[i].facility == "ZAE") {
           break;
         } 
-        if (user.roles[i].facility != "ZJX") {
+        if (user.roles[i].facility != "ZMA") {
           break;
         }
         //Really pointless since the role bot is not able to assign roles higher than itself
