@@ -4,7 +4,8 @@ name: Build and Deploy
 on:
   push:
     branches: [master]
-
+  workflow_dispatch:
+  
 jobs: 
   build-docker-image:
     runs-on: ubuntu-latest
@@ -36,6 +37,6 @@ jobs:
       - name: Log into K8s cluster
         run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 k8s-zma-website
       - name: Deploy image to cluster
-        run: kubectl set image deployment/ui ui=ghcr.io/vzma/web-ui:${{ github.sha }} --record -n zma-web-stack
+        run: kubectl set image deployment/rolebot ui=ghcr.io/vzma/web-ui:${{ github.sha }} --record -n zma-web-stack
       - name: Verify deployment
-        run: kubectl rollout status deployment/ui -n zma-web-stack
+        run: kubectl rollout status deployment/rolebot -n zma-web-stack
