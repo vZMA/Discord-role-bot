@@ -23,9 +23,9 @@ jobs:
         with:
           push: true
           tags: |
-            ghcr.io/vzma/rolebot:${{ github.sha }}
-            ghcr.io/vzma/rolebot:master
-            ghcr.io/vzma/rolebot:latest
+            ghcr.io/vzma/discord-role-bot:${{ github.sha }}
+            ghcr.io/vzma/discord-role-bot:master
+            ghcr.io/vzma/discord-role-bot:latest
   deploy-docker-image:
     needs: build-docker-image
     runs-on: ubuntu-latest
@@ -37,6 +37,6 @@ jobs:
       - name: Log into K8s cluster
         run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 k8s-zma-website
       - name: Deploy image to cluster
-        run: kubectl set image deployment/rolebot rolebot=ghcr.io/vzma/rolebot:${{ github.sha }} --record -n zma-web-stack
+        run: kubectl set image deployment/discord-role-bot discord-role-bot=ghcr.io/vzma/discord-role-bot:${{ github.sha }} --record -n zma-web-stack
       - name: Verify deployment
-        run: kubectl rollout status deployment/rolebot -n zma-web-stack
+        run: kubectl rollout status deployment/discord-role-bot -n zma-web-stack
