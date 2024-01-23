@@ -122,10 +122,9 @@ export class VerifyCommand extends Command {
               break;
             } else {
               continue;
+              roles.push(await interaction.guild?.roles.fetch(config.member)); //Add 'ZJX Controller' role
             }
           }
-          //* Edit below based on neighboring ARTCCs
-          roles.push(await interaction.guild?.roles.fetch(config.member)); //Add 'ZJX Controller' role
           
       } catch (error) {
         await handleError(0, interaction);
