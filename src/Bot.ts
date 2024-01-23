@@ -7,5 +7,5 @@ const client = new SapphireClient({ intents: [GatewayIntentBits.Guilds, GatewayI
 client.once('ready', () => {
   console.log("Bot is online");
 })
-client.login(process.env.TOKEN);
+client.login(process.env.DISCORD_CLIENT_TOKEN);
 
