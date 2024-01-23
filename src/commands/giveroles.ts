@@ -167,6 +167,9 @@ export class VerifyCommand extends Command {
           case "MTR":
             roles.push(await interaction.guild?.roles.fetch(config.mtr));
             break;
+          case "FACCBT":
+            roles.push(await interaction.guild?.roles.fetch(config.mtr));
+            break;
         }
       }
     }
