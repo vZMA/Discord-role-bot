@@ -126,6 +126,17 @@ export class VerifyCommand extends Command {
           }
           //* Edit below based on neighboring ARTCCs
           switch (user.artcc) {
+              case "ZJX": {
+              roles.push(await interaction.guild?.roles.fetch('1199464076724682772'));
+              break;
+            }
+            case "ZHU": {
+              roles.push(await interaction.guild?.roles.fetch('1199464076724682772'));
+              break;
+            }
+            default: {
+              break;
+            }
           }
         } else {
           roles.push(await interaction.guild?.roles.fetch(config.member)); //Add 'ZJX Controller' role
