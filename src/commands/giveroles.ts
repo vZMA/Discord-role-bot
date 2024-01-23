@@ -1,21 +1,23 @@
 import { Command } from "@sapphire/framework";
-import axios, { AxiosError, AxiosResponse } from 'axios';
-import * as json from '../config.json'
+import axios, { AxiosError, AxiosResponse } from "axios";
+import * as json from "../config.json";
 import { Role } from "discord.js";
 
 export class VerifyCommand extends Command {
   public constructor(context: Command.Context, options: Command.Options) {
-    super(context, { ...options, description: "Verify a User", });
+    super(context, { ...options, description: "Verify a User" });
   }
   public override registerApplicationCommands(registry: Command.Registry) {
     registry.registerChatInputCommand((builder) => {
-      builder.setName("giveroles").setDescription("Assign roles for channel access");
+      builder
+        .setName("giveroles")
+        .setDescription("Assign roles for channel access");
     });
   }
-  
+
   public async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
     await interaction.deferReply();
-    let roles:Role[] = [];
+    let roles: Role[] = [];
     let config: IStringIndex = json;
     const uid = interaction.user.id;
     let res: AxiosResponse = {} as AxiosResponse;
@@ -30,7 +32,7 @@ export class VerifyCommand extends Command {
       }
       return;
     }
-    
+
     if (data.id != uid) {
       await handleError(2, interaction);
       return;
@@ -49,15 +51,15 @@ export class VerifyCommand extends Command {
       rating: res.data.data.rating.toString(),
       roles: res.data.data.roles,
       visiting_facilities: res.data.data.visiting_facilities,
-      isVisitor: false
-    }
-    
+      isVisitor: false,
+    };
+
     let member = await interaction.guild?.members.fetch(uid);
     member.roles.remove(member.roles.cache);
-    roles.push(await interaction.guild?.roles.fetch(config.base)) //VATSIMController for ZJX
+    roles.push(await interaction.guild?.roles.fetch(config.base)); //VATSIMController for ZJX
     if (member != null) {
       //Convert VATSIM Rating Integer to String
-      switch (user.rating) { 
+      switch (user.rating) {
         case "1": {
           user.rating = "OBS";
           break;
@@ -127,7 +129,6 @@ export class VerifyCommand extends Command {
         } else {
           roles.push(await interaction.guild?.roles.fetch(config.member)); //Add 'ZJX Controller' role
         }
-          
       } catch (error) {
         await handleError(0, interaction);
         console.log(`Line 115: ${error}`);
@@ -135,26 +136,26 @@ export class VerifyCommand extends Command {
       }
     }
     console.log(user.roles.length);
-   if (user.roles.length > 0) {
+    if (user.roles.length > 0) {
       for (let i = 0; i < user.roles.length; i++) {
         if (user.roles[i].facility == "ZAE") {
           break;
-        } 
+        }
         if (user.roles[i].facility != "ZMA") {
           break;
         }
         //Really pointless since the role bot is not able to assign roles higher than itself
-        switch(user.roles[i].role) {
-          case "ATM": 
+        switch (user.roles[i].role) {
+          case "ATM":
             roles.push(await interaction.guild?.roles.fetch(config.atm));
             break;
-          case "DATM": 
+          case "DATM":
             roles.push(await interaction.guild?.roles.fetch(config.datm));
             break;
           case "TA":
             roles.push(await interaction.guild?.roles.fetch(config.ta));
             break;
-          case "FE": 
+          case "FE":
             roles.push(await interaction.guild?.roles.fetch(config.fe));
             break;
           case "EC":
@@ -167,16 +168,19 @@ export class VerifyCommand extends Command {
       }
     }
     console.log(roles);
-    
+
     await member.roles.add(roles); //Add all roles in the roles[] array
     await interaction.editReply("Your roles have been assigned!");
     return;
   }
 }
 
-async function handleError(error: number, interaction: Command.ChatInputCommandInteraction) {
+async function handleError(
+  error: number,
+  interaction: Command.ChatInputCommandInteraction
+) {
   let errorText: string;
-  
+
   switch (error) {
     case 0: {
       errorText = `There was an error assigning roles for ${interaction.user.username}`;
@@ -185,17 +189,19 @@ async function handleError(error: number, interaction: Command.ChatInputCommandI
       break;
     }
     case 1: {
-      errorText = "You are not linked to a VATSIM account! Please link your account at https://community.vatsim.net/ then try again!"
+      errorText =
+        "You are not linked to a VATSIM account! Please link your account at https://community.vatsim.net/ then try again!";
       await interaction.editReply(errorText);
       break;
     }
     case 2: {
-      errorText = "You were not found in the VATUSA database! You have been issued the pilot role"
+      errorText =
+        "You were not found in the VATUSA database! You have been issued the pilot role";
       await interaction.editReply(errorText);
       break;
     }
     case 3: {
-      errorText = "Something went wrong, please try again!"
+      errorText = "Something went wrong, please try again!";
       await interaction.editReply(errorText);
       await sendError("Some error occured while verifying a user", interaction);
       break;
@@ -204,13 +210,19 @@ async function handleError(error: number, interaction: Command.ChatInputCommandI
   return;
 }
 
-async function sendError(errorText: string, interaction: Command.ChatInputCommandInteraction) {
+async function sendError(
+  errorText: string,
+  interaction: Command.ChatInputCommandInteraction
+) {
   let errorDate = new Date();
   let config: IStringIndex = json;
-  let errorStamp = errorDate.toLocaleDateString() + " " + errorDate.toLocaleTimeString();
+  let errorStamp =
+    errorDate.toLocaleDateString() + " " + errorDate.toLocaleTimeString();
   console.log(errorText);
-  const message = `${errorStamp} Zulu: ${errorText}`
-  await interaction.editReply(errorText + " \n**The developers have been notified of this error.**")
+  const message = `${errorStamp} Zulu: ${errorText}`;
+  await interaction.editReply(
+    errorText + " \n**The developers have been notified of this error.**"
+  );
   for (let i = 0; i < config.notified_users.length; i++) {
     let user = await interaction.client.users.fetch(config.notified_users[i]);
     user.send(message);
@@ -236,7 +248,7 @@ interface User {
       role: string;
       created_at: string;
     }
-  ]
+  ];
   visiting_facilities: [
     {
       id: number;
@@ -245,7 +257,7 @@ interface User {
       created_at: string;
       updated_at: string;
     }
-  ],
+  ];
   isVisitor: boolean;
 }
 
