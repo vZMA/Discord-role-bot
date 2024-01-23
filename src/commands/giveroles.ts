@@ -164,6 +164,9 @@ export class VerifyCommand extends Command {
           case "WM":
             roles.push(await interaction.guild?.roles.fetch(config.wm));
             break;
+          case "MTR":
+            roles.push(await interaction.guild?.roles.fetch(config.mtr));
+            break;
         }
       }
     }
