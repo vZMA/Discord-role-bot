@@ -11,7 +11,7 @@ export class VerifyCommand extends Command {
     registry.registerChatInputCommand((builder) => {
       builder
         .setName("giveroles")
-        .setDescription("Assign roles for channel access");
+        .setDescription("Use this command to have your roles assigned using your VATSIM information.");
     });
   }
 
@@ -56,7 +56,7 @@ export class VerifyCommand extends Command {
 
     let member = await interaction.guild?.members.fetch(uid);
     member.roles.remove(member.roles.cache);
-    roles.push(await interaction.guild?.roles.fetch(config.base)); //VATSIMController for ZJX
+    roles.push(await interaction.guild?.roles.fetch(config.base)); //VATSIMController for ZMA
     if (member != null) {
       //Convert VATSIM Rating Integer to String
       switch (user.rating) {
@@ -202,7 +202,7 @@ async function handleError(
     }
     case 2: {
       errorText =
-        "You were not found in the VATUSA database! You have been issued the pilot role";
+        "While you have been verified as a VATSIM member, you are not listed in the VATUSA Controller Database. You have been assigned the appropriate role.";
       await interaction.editReply(errorText);
       break;
     }
