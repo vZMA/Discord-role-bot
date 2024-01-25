@@ -167,6 +167,7 @@ export class VerifyCommand extends Command {
             break;
           case "EC":
             roles.push(await interaction.guild?.roles.fetch(config.ec));
+            await member.setNickname(`${user.fname} ${user.lname} | "EC"`);
             break;
           case "WM":
             roles.push(await interaction.guild?.roles.fetch(config.wm));
