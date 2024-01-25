@@ -135,6 +135,46 @@ export class VerifyCommand extends Command {
         return;
       }
     }
+
+        console.log(user.roles.length);
+
+        if (user.roles.length > 0) {
+      for (let i = 0; i < user.roles.length; i++) {
+        if (user.roles[i].facility == "ZAE") {
+          break;
+        }
+        if (user.roles[i].facility != "ZMA") {
+          break;
+        }
+        //Really pointless since the role bot is not able to assign roles higher than itself
+        switch (user.roles[i].role) {
+          case "ATM":
+            roles.push(await interaction.guild?.roles.fetch(config.atm));
+            break;
+          case "DATM":
+            roles.push(await interaction.guild?.roles.fetch(config.datm));
+            break;
+          case "TA":
+            roles.push(await interaction.guild?.roles.fetch(config.ta));
+            break;
+          case "FE":
+            roles.push(await interaction.guild?.roles.fetch(config.fe));
+            break;
+          case "EC":
+            roles.push(await interaction.guild?.roles.fetch(config.ec));
+            break;
+          case "WM":
+            roles.push(await interaction.guild?.roles.fetch(config.wm));
+            break;
+          case "MTR":
+            roles.push(await interaction.guild?.roles.fetch(config.mtr));
+            break;
+          case "FACCBT":
+            roles.push(await interaction.guild?.roles.fetch(config.mtr));
+            break;
+        }
+      }
+    }
     
     console.log(roles);
 
