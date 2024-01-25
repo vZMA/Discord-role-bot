@@ -153,30 +153,6 @@ export class VerifyCommand extends Command {
         }
         //Really pointless since the role bot is not able to assign roles higher than itself
         switch (user.roles[i].role) {
-          case "ATM":
-            roles.push(await interaction.guild?.roles.fetch(config.atm));
-            await member.setNickname(`${user.fname} ${user.lname} | ATM`);
-            break;
-          case "DATM":
-            roles.push(await interaction.guild?.roles.fetch(config.datm));
-            await member.setNickname(`${user.fname} ${user.lname} | DATM`);
-            break;
-          case "TA":
-            roles.push(await interaction.guild?.roles.fetch(config.ta));
-            await member.setNickname(`${user.fname} ${user.lname} | TA`);
-            break;
-          case "FE":
-            roles.push(await interaction.guild?.roles.fetch(config.fe));
-            await member.setNickname(`${user.fname} ${user.lname} | FE`);
-            break;
-          case "EC":
-            roles.push(await interaction.guild?.roles.fetch(config.ec));
-            await member.setNickname(`${user.fname} ${user.lname} | EC`);
-            break;
-          case "WM":
-            roles.push(await interaction.guild?.roles.fetch(config.wm));
-            await member.setNickname(`${user.fname} ${user.lname} | WM`);
-            break;
           case "MTR":
             roles.push(await interaction.guild?.roles.fetch(config.mtr));
             await member.setNickname(`${user.fname} ${user.lname} | MTR`);
@@ -185,6 +161,30 @@ export class VerifyCommand extends Command {
             roles.push(await interaction.guild?.roles.fetch(config.mtr));
             await member.setNickname(`${user.fname} ${user.lname} | INS`);
             break;
+          case "WM":
+            roles.push(await interaction.guild?.roles.fetch(config.wm));
+            await member.setNickname(`${user.fname} ${user.lname} | WM`);
+            break;
+          case "EC":
+            roles.push(await interaction.guild?.roles.fetch(config.ec));
+            await member.setNickname(`${user.fname} ${user.lname} | EC`);
+            break;
+          case "FE":
+            roles.push(await interaction.guild?.roles.fetch(config.fe));
+            await member.setNickname(`${user.fname} ${user.lname} | FE`);
+            break;
+          case "TA":
+            roles.push(await interaction.guild?.roles.fetch(config.ta));
+            await member.setNickname(`${user.fname} ${user.lname} | TA`);
+            break;
+          case "DATM":
+            roles.push(await interaction.guild?.roles.fetch(config.datm));
+            await member.setNickname(`${user.fname} ${user.lname} | DATM`);
+            break;
+          case "ATM":
+            roles.push(await interaction.guild?.roles.fetch(config.atm));
+            await member.setNickname(`${user.fname} ${user.lname} | ATM`);
+            break;
         }
       }
     }
@@ -192,7 +192,7 @@ export class VerifyCommand extends Command {
     console.log(roles);
 
     await member.roles.add(roles); //Add all roles in the roles[] array
-    await interaction.editReply("Welcome to our Discord! We are glad you are here! **Your roles have been assigned!**");
+    await interaction.editReply("Welcome to our Discord, we are glad you are here! **Your roles have been assigned!**");
     return;
   }
 }
