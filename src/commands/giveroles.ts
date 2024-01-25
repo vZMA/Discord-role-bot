@@ -11,7 +11,9 @@ export class VerifyCommand extends Command {
     registry.registerChatInputCommand((builder) => {
       builder
         .setName("giveroles")
-        .setDescription("Use this command to have your roles assigned using your VATSIM information.");
+        .setDescription(
+          "Use this command to have your roles assigned using your VATSIM information."
+        );
     });
   }
 
@@ -55,6 +57,9 @@ export class VerifyCommand extends Command {
     };
 
     let member = await interaction.guild?.members.fetch(uid);
+    member.roles.remove(
+      member.roles.cache.filter((role) => role.name != "Server Booster")
+    );
     roles.push(await interaction.guild?.roles.fetch(config.base)); //VATSIMController for ZMA
     if (member != null) {
       //Convert VATSIM Rating Integer to String
@@ -135,9 +140,9 @@ export class VerifyCommand extends Command {
       }
     }
 
-        console.log(user.roles.length);
+    console.log(user.roles.length);
 
-        if (user.roles.length > 0) {
+    if (user.roles.length > 0) {
       for (let i = 0; i < user.roles.length; i++) {
         if (user.roles[i].facility == "ZAE") {
           break;
@@ -174,7 +179,7 @@ export class VerifyCommand extends Command {
         }
       }
     }
-    
+
     console.log(roles);
 
     await member.roles.add(roles); //Add all roles in the roles[] array
