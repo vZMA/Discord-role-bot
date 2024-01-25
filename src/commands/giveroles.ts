@@ -183,7 +183,7 @@ export class VerifyCommand extends Command {
     console.log(roles);
 
     await member.roles.add(roles); //Add all roles in the roles[] array
-    await interaction.editReply("Your roles have been assigned!");
+    await interaction.editReply("Welcome to our Discord! We are glad you are here! **Your roles have been assigned!**");
     return;
   }
 }
