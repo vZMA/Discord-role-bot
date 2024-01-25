@@ -155,11 +155,9 @@ export class VerifyCommand extends Command {
         switch (user.roles[i].role) {
           case "MTR":
             roles.push(await interaction.guild?.roles.fetch(config.mtr));
-            await member.setNickname(`${user.fname} ${user.lname} | MTR`);
             break;
           case "FACCBT":
             roles.push(await interaction.guild?.roles.fetch(config.mtr));
-            await member.setNickname(`${user.fname} ${user.lname} | INS`);
             break;
           case "WM":
             roles.push(await interaction.guild?.roles.fetch(config.wm));
