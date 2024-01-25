@@ -115,12 +115,13 @@ export class VerifyCommand extends Command {
       }
       console.log(user);
       try {
-        await member.setNickname(`${user.fname} ${user.lname} | ${user.artcc}`);
+        await member.setNickname(`${user.fname} ${user.lname}`);
         let rating = config[user.rating];
         roles.push(await interaction.guild?.roles.fetch(rating));
         if (user.artcc != "ZMA") {
           for (let i = 0; i < user.visiting_facilities.length; i++) {
             if (user.visiting_facilities[i].facility == "ZMA") {
+              await member.setNickname(`${user.fname} ${user.lname} | ${user.artcc}`);
               console.log("User is a visitor");
               console.log(config.visitor);
               console.log(await interaction.guild?.roles.fetch(config.visitor));
