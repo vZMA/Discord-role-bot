@@ -55,7 +55,6 @@ export class VerifyCommand extends Command {
     };
 
     let member = await interaction.guild?.members.fetch(uid);
-    member.roles.remove(member.roles.cache);
     roles.push(await interaction.guild?.roles.fetch(config.base)); //VATSIMController for ZMA
     if (member != null) {
       //Convert VATSIM Rating Integer to String
