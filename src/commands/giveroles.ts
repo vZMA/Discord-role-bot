@@ -132,7 +132,7 @@ export class VerifyCommand extends Command {
             }
           }
         } else {
-          roles.push(await interaction.guild?.roles.fetch(config.member)); //Add 'ZJX Controller' role
+          roles.push(await interaction.guild?.roles.fetch(config.member)); //Add 'ZMA Controller' role
         }
       } catch (error) {
         await handleError(0, interaction);
